@@ -8,7 +8,8 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct StandupFormFeature: Reducer {
+@Reducer
+struct StandupFormFeature {
     struct State: Equatable {
         @BindingState var focus: Field?
         @BindingState var standup: Standup
@@ -23,7 +24,8 @@ struct StandupFormFeature: Reducer {
             self.standup = standup
 
             if self.standup.attendees.isEmpty {
-                self.standup.attendees.append(Attendee(id: UUID()))
+                @Dependency(\.uuid) var uuid
+                self.standup.attendees.append(Attendee(id: uuid()))
             }
         }
     }
