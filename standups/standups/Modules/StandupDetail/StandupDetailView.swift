@@ -85,6 +85,11 @@ struct StandupDetailView: View {
                     viewStore.send(.editButtonTapped)
                 }
             }
+            .alert(
+                store: self.store.scope(
+                    state: \.$alert,
+                    action: \.alert)
+            )
             .sheet(
                 store: self.store.scope(
                     state: \.$editStandup,

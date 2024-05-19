@@ -6,30 +6,67 @@
 //
 
 import XCTest
+import ComposableArchitecture
+@testable import standups
 
+@MainActor
 final class AppTest: XCTestCase {
+    func testEdit() async throws {
+        let standup = Standup.mock
+        let store = TestStore(
+            initialState: AppFeature.State(
+                standupsList: StandupsListFeature.State(
+                    standups: [standup]
+                )
+            )
+        ){
+            AppFeature()
+        }
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+        await store.send(.path(.push(id: 0, state: .detail(StandupDetailFeature.State(standup: standup))))) {
+            $0.path[id: 0] = .detail(StandupDetailFeature.State(standup: standup))
+        }
+        await store.send(.path(.element(id: 0, action: .detail(.editButtonTapped)))) {
+            $0.path[id: 0, case: /AppFeature.Path.State.detail]?.editStandup = StandupFormFeature.State(standup: standup)
+        }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        var editedStandup = standup
+        editedStandup.title = "Code Review"
+        await store.send(.path(.element(id: 0, action: .detail(.editStandup(.presented(.set(\.$standup, editedStandup))))))) {
+            $0.path[id: 0, case: /AppFeature.Path.State.detail]?.editStandup?.standup.title = "Code Review"
+        }
+        await store.send(.path(.element(id: 0, action: .detail(.saveStandupButtonTapped)))) {
+            $0.path[id: 0, case: /AppFeature.Path.State.detail]?.editStandup = nil
+            $0.path[id: 0, case: /AppFeature.Path.State.detail]?.standup.title = "Code Review"
+        }
+        await store.receive(.path(.element(id: 0, action: .detail(.delegate(.standupUpdate(editedStandup)))))) {
+            $0.standupsList.standups[0].title = "Code Review"
         }
     }
 
+    func testEdit_NonExhaustive() async throws {
+        let standup = Standup.mock
+        let store = TestStore(
+            initialState: AppFeature.State(
+                standupsList: StandupsListFeature.State(
+                    standups: [standup]
+                )
+            )
+        ){
+            AppFeature()
+        }
+
+        store.exhaustivity = .off // to skip assertion so can only focus on specific action
+        await store.send(.path(.push(id: 0, state: .detail(StandupDetailFeature.State(standup: standup)))))
+        await store.send(.path(.element(id: 0, action: .detail(.editButtonTapped))))
+
+        var editedStandup = standup
+        editedStandup.title = "Code Review"
+        await store.send(.path(.element(id: 0, action: .detail(.editStandup(.presented(.set(\.$standup, editedStandup)))))))
+        await store.send(.path(.element(id: 0, action: .detail(.saveStandupButtonTapped))))
+        await store.skipReceivedActions() // skip for recive action
+        store.assert {
+            $0.standupsList.standups[0].title = "Code Review"
+        }
+    }
 }

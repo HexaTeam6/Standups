@@ -30,7 +30,7 @@ struct StandupFormFeature {
         }
     }
 
-    enum Action: BindableAction {
+    enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case addAttendeeButtonTapped
         case deleteAttendees(atOffsets: IndexSet)

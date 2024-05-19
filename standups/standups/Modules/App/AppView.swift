@@ -6,13 +6,40 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct AppView: View {
+    let store: StoreOf<AppFeature>
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStackStore(
+            store.scope(state: \.path, action: \.path)
+        ) {
+            StandupsListView(store: store.scope(
+                state: \.standupsList,
+                action: \.standupsList
+            ))
+        } destination: { state in
+            switch state {
+            case .detail:
+                CaseLet(
+                    /AppFeature.Path.State.detail,
+                     action: AppFeature.Path.Action.detail,
+                     then: StandupDetailView.init(store:)
+                )
+            }
+        }
     }
 }
 
 #Preview {
-    AppView()
+    AppView(
+        store: Store(
+            initialState: AppFeature.State(
+                standupsList: StandupsListFeature.State(standups: [.mock])
+            )
+        ) {
+            AppFeature()
+                ._printChanges()
+        }
+    )
 }

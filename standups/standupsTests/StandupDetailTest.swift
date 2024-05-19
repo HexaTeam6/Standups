@@ -24,6 +24,9 @@ final class StandupDetailTest: XCTestCase {
         standup.title = "Code Review"
         await store.send(.editStandup(.presented(.set(\.$standup, standup))))
 
-        await store.send(.saveStandupButtonTapped)
+        await store.send(.saveStandupButtonTapped) {
+            $0.editStandup = nil
+            $0.standup.title = "Code Review"
+        }
     }
 }
