@@ -26,6 +26,12 @@ struct AppView: View {
                      action: AppFeature.Path.Action.detail,
                      then: StandupDetailView.init(store:)
                 )
+            case .recordMeeting:
+                CaseLet(
+                    /AppFeature.Path.State.recordMeeting,
+                     action: AppFeature.Path.Action.recordMeeting,
+                     then: RecordMeetingView.init(store:)
+                )
             }
         }
     }

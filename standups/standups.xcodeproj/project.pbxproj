@@ -32,6 +32,8 @@
 		38EDE2932BF0E28D00427916 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDE2922BF0E28D00427916 /* AppView.swift */; };
 		38EDE2952BF0E29E00427916 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDE2942BF0E29E00427916 /* AppStore.swift */; };
 		38EDE2992BF9EB6B00427916 /* AppTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDE2982BF9EB6B00427916 /* AppTest.swift */; };
+		38EDE29C2BFCF6B900427916 /* RecordMeetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDE29B2BFCF6B900427916 /* RecordMeetingView.swift */; };
+		38EDE29E2BFCF77B00427916 /* RecordMeetingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDE29D2BFCF77B00427916 /* RecordMeetingStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		38EDE2922BF0E28D00427916 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		38EDE2942BF0E29E00427916 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		38EDE2982BF9EB6B00427916 /* AppTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTest.swift; sourceTree = "<group>"; };
+		38EDE29B2BFCF6B900427916 /* RecordMeetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMeetingView.swift; sourceTree = "<group>"; };
+		38EDE29D2BFCF77B00427916 /* RecordMeetingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMeetingStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				38EDE2912BF0E27100427916 /* App */,
+				38EDE29A2BFCF6A800427916 /* RecordMeeting */,
 				3879A2062BD74F0E0033F033 /* StandupDetail */,
 				3879A1D92BD505230033F033 /* StandupForm */,
 				3879A1DC2BD505990033F033 /* StandupsList */,
@@ -234,6 +239,15 @@
 				38EDE2942BF0E29E00427916 /* AppStore.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		38EDE29A2BFCF6A800427916 /* RecordMeeting */ = {
+			isa = PBXGroup;
+			children = (
+				38EDE29D2BFCF77B00427916 /* RecordMeetingStore.swift */,
+				38EDE29B2BFCF6B900427916 /* RecordMeetingView.swift */,
+			);
+			path = RecordMeeting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +391,8 @@
 				3879A1DF2BD506140033F033 /* StandupFormStore.swift in Sources */,
 				3879A1CB2BD489CD0033F033 /* StandupsListView.swift in Sources */,
 				3879A1D42BD4A6490033F033 /* StandupFormView.swift in Sources */,
+				38EDE29E2BFCF77B00427916 /* RecordMeetingStore.swift in Sources */,
+				38EDE29C2BFCF6B900427916 /* RecordMeetingView.swift in Sources */,
 				3879A1D62BD4A7580033F033 /* ThemePicker.swift in Sources */,
 				38EDE2952BF0E29E00427916 /* AppStore.swift in Sources */,
 				3879A1E52BD575C20033F033 /* StandupsListStore.swift in Sources */,

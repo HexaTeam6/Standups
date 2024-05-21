@@ -15,9 +15,9 @@ struct StandupDetailView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 Section {
-                    NavigationLink {
-
-                    } label: {
+                    NavigationLink (
+                        state: AppFeature.Path.State.recordMeeting(RecordMeetingFeature.State(standup: viewStore.standup))
+                    ) {
                         Label("Start Meeting", systemImage: "timer")
                             .font(.headline)
                             .foregroundColor(.accentColor)
@@ -86,14 +86,14 @@ struct StandupDetailView: View {
                 }
             }
             .alert(
-                store: self.store.scope(
-                    state: \.$alert,
-                    action: \.alert)
+                store: self.store.scope(state: \.$destination, action: \.destination),
+                state: /StandupDetailFeature.Destination.State.alert,
+                action: StandupDetailFeature.Destination.Action.alert
             )
             .sheet(
-                store: self.store.scope(
-                    state: \.$editStandup,
-                    action: \.editStandup)
+                store: self.store.scope(state: \.$destination, action: \.destination),
+                state: /StandupDetailFeature.Destination.State.editStandup,
+                action: StandupDetailFeature.Destination.Action.editStandup
             ) { store in
                 NavigationStack {
                     StandupFormView(store: store)

@@ -22,10 +22,10 @@ final class StandupDetailTest: XCTestCase {
         await store.send(.editButtonTapped)
 
         standup.title = "Code Review"
-        await store.send(.editStandup(.presented(.set(\.$standup, standup))))
+        await store.send(.destination(.presented(.editStandup(.set(\.$standup, standup)))))
 
         await store.send(.saveStandupButtonTapped) {
-            $0.editStandup = nil
+            $0.destination = nil
             $0.standup.title = "Code Review"
         }
     }
